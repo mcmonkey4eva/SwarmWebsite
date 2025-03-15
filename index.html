@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SwarmUI</title>
+        <style>
+            body {
+                background-color: #111111;
+                color: #ffffff;
+                font-family: Arial, sans-serif;
+                background-image: url("imgs/swarmui-bg.jpg");
+                background-size: cover;
+                overflow: hidden;
+            }
+            .content-container {
+                width: calc(min(80vw, 800px));
+                background-color: #111111;
+                height: 96vh;
+                position: absolute;
+                top: 0.75vh;
+                left: calc(50vw - (min(80vw, 800px) / 2));
+                padding: 20px;
+                overflow: auto;
+                border-radius: 20px;
+                line-height: 1.3;
+            }
+            .header {
+                font-size: 300%;
+                font-weight: bold;
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .sub-header {
+                font-size: 150%;
+                font-weight: bold;
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #808080;
+            }
+            .subsub-header {
+                font-size: 120%;
+                font-weight: bold;
+                margin: auto;
+                width: fit-content;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                border-bottom: 1px solid #808080;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .dark-text {
+                color: #808080;
+            }
+            .tiny-line {
+                font-size: 80%;
+                font-style: italic;
+                text-align: center;
+            }
+            .sub-line {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            .footer {
+                margin-top: 100px;
+                padding-top: 10px;
+                border-top: 1px solid #808080;
+                font-size: 80%;
+            }
+            a {
+                color: #10C010;
+            }
+            a:hover {
+                color: #40FF40;
+            }
+            .dark-text a {
+                color: #108010;
+            }
+            .dark-text a:hover {
+                color: #10F010;
+            }
+            .content-image {
+                display: block;
+                max-width: 100%;
+                max-height: 600px;
+                margin: auto;
+                object-fit: cover;
+                border-radius: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content-container">
+            <div class="header">SwarmUI</div>
+            <div class="tiny-line dark-text">Formerly known as "StableSwarmUI"</div>
+            <div class="sub-line">A Modular AI Image Generation Web-User-Interface, with an emphasis on making powertools easily accessible, high performance, and extensibility. Supports AI image models (Stable Diffusion, Flux, etc.), and AI video models (LTX-V, Hunyuan Video, Cosmos, Wan, etc.), with plans to support eg audio and more in the future.</div>
+            <br>
+            <br>
+            <img src="imgs/swarmui.jpg" alt="SwarmUI sample image" class="content-image">
+            <br><div class="sub-header">Privacy And Rights</div>
+            <br>SwarmUI by default runs entirely locally on your own computer. It does not collect any data from you.
+            <br>
+            <br>SwarmUI is 100% Free-and-Open-Source software, under the MIT License. You can do whatever you want with it.
+            <br>
+            <br><div class="sub-header">How To Run</div>
+            <br><div class="subsub-header">Option 1: Run Locally, On Your Own Machine</div>
+            <br>SwarmUI is compatible with Windows, Linux, MacOS. Requires a modern GPU (Nvidia RTX 30xx or newer recommended).
+            <br>
+            <br><a href="https://github.com/mcmonkeyprojects/SwarmUI?tab=readme-ov-file#installing-on-windows">Click Here</a> for download links and install instructions (pick the one that matches your OS).
+            <br><div class="tiny-line dark-text">Follow the instructions in the linked readme, don't overthink it</div>
+            <br>
+            <br><div class="subsub-header">Option 2: Run Remotely, On A Cloud Server</div>
+            <br>
+            <br>You can try SwarmUI for free on <a href="https://colab.research.google.com/github/mcmonkeyprojects/SwarmUI/blob/master/colab/colab-notebook.ipynb">Google Colab, click here</a>.
+            <br>
+            <br>Or, you can rent time on a cloud server, such as Runpod or Vast.ai - <a href="https://github.com/mcmonkeyprojects/SwarmUI?tab=readme-ov-file#run-it-on-a-cloud-gpu-provider">click here for templates.</a>
+            <br><div class="tiny-line dark-text">For other cloud providers, follow the 'install locally' instructions for Linux on the server.</div>
+            <br>
+            <br><div class="sub-header">Anything Else</div>
+            <br>
+            <br>More information on <a href="https://github.com/mcmonkeyprojects/SwarmUI">the SwarmUI Readme, here</a>.
+            <br>
+            <br>Or, join <a href="https://discord.gg/q2y38cqjNw">the Discord.</a>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br><div class="tiny-line dark-text">This website is basically a placeholder cause people keep saying Swarm needs a website.</div>
+            <br>
+            <div class="footer dark-text">
+                SwarmUI is developed by Alex "mcmonkey" Goodwin, and is a 100% Free-and-Open-Source software project, under the MIT License.
+                <br>SwarmUI can be found on <a href="https://github.com/mcmonkeyprojects/SwarmUI">GitHub here</a>.
+                <br>This website's code can be found on <a href="https://github.com/mcmonkey4eva/SwarmWebsite">GitHub here</a>.
+            </div>
+        </div>
+    </body>
+</html>
