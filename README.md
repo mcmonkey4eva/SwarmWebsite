@@ -1,6 +1,6 @@
 # SwarmUI Website
 
-Web site content for [SwarmUI.org](https://swarmui.org)
+Web site content for [SwarmUI.net](https://swarmui.net)
 
 # License
 
