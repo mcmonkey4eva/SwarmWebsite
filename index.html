@@ -22,7 +22,6 @@
                 filter: blur(3px) brightness(50%);
             }
             .image-flyers img {
-                width: 25vw;
                 height: 25vw;
                 object-fit: contain;
                 position: absolute;
@@ -153,13 +152,13 @@
         </div>
         <script>
             const imageFlyers = document.querySelector(".image-flyers");
-            const maxImages = 27;
+            const maxImages = 29;
             let flyers = [];
             let ticks = 0;
             let checkRate = 1;
             let perSet = 10;
             let spawnSlots = [0, 25, 50, 75, 100, 125, 150, 175, 200];
-            let slotTicks = {0: -10, 25: -10, 50: -10, 75: -10, 100: -10, 125: -10, 150: -10, 175: -10};
+            let slotTicks = {};
             let delay = -10;
             function spawnMore() {
                 ticks += 0.5;
@@ -170,7 +169,15 @@
                     return;
                 }
                 for (let i = 0; i < perSet; i++) {
-                    let openSlots = spawnSlots.filter(slot => slotTicks[slot] <= ticks);
+                    let openSlots = spawnSlots.filter(slot => {
+                        if (!(slot in slotTicks)) {
+                            return true;
+                        }
+                        let flyer = slotTicks[slot];
+                        let width = flyer.elem.clientWidth < 10 ? 10 : flyer.elem.clientWidth;
+                        let actualWidth = width * 100 / window.innerWidth;
+                        return flyer.pos + actualWidth < 151;
+                    });
                     if (openSlots.length == 0) {
                         continue;
                     }
@@ -182,18 +189,19 @@
                     const img = document.createElement("img");
                     img.src = `imgs/backs/back${imgId}.jpg`;
                     img.style.top = `${slot}vw`;
+                    let flyer = {
+                        pos: delay * 25 + 150,
+                        elem: img,
+                        time: ticks
+                    };
                     if (delay < 0) {
                         img.style.left = `${delay * 25 + 150}vw`;
                     }
                     else {
-                        slotTicks[slot] = ticks + Math.random() * 2 + 8;
+                        slotTicks[slot] = flyer;
                     }
                     imageFlyers.appendChild(img);
-                    flyers.push({
-                        pos: delay * 25 + 150,
-                        elem: img,
-                        time: ticks
-                    });
+                    flyers.push(flyer);
                 }
             }
             for (let i = 0; i < 10; i++) {
