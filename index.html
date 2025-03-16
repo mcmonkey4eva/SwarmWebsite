@@ -201,9 +201,10 @@
             }
             let lastTime = 0;
             let tickAccum = 0;
-            function animate(time) {
-                let delta = time - lastTime;
-                lastTime = time;
+            let lastTimeActual = 0;
+            let deltaSubtract = 0;
+            function doOneHit(delta) {
+                lastTimeActual = Date.now();
                 for (let i = 0; i < flyers.length; i++) {
                     flyers[i].pos -= delta / 400;
                     flyers[i].elem.style.left = `${flyers[i].pos}vw`;
@@ -218,9 +219,26 @@
                     spawnMore();
                     tickAccum -= 500;
                 }
+            }
+            function animate(time) {
+                let delta = time - lastTime;
+                if (delta >= deltaSubtract) {
+                    delta -= deltaSubtract;
+                    deltaSubtract = 0;
+                }
+                lastTime = time;
+                doOneHit(delta);
                 requestAnimationFrame(animate);
             }
             requestAnimationFrame(animate);
+            function backupLoop() {
+                let delta = Date.now() - lastTimeActual;
+                if (delta > 300) {
+                    deltaSubtract += delta;
+                    doOneHit(delta);
+                }
+            }
+            setInterval(backupLoop, 300);
         </script>
     </body>
 </html>
