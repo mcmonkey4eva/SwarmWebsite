@@ -152,31 +152,23 @@
         </div>
         <script>
             const imageFlyers = document.querySelector(".image-flyers");
-            const maxImages = 29;
+            const maxImages = 34;
             let flyers = [];
-            let ticks = 0;
-            let checkRate = 1;
             let perSet = 10;
             let spawnSlots = [0, 25, 50, 75, 100, 125, 150, 175, 200];
             let slotTicks = {};
-            let delay = -10;
             function spawnMore() {
-                ticks += 0.5;
-                if (delay < 0) {
-                    delay++;
-                }
-                else if (ticks % checkRate != 0) {
-                    return;
-                }
                 for (let i = 0; i < perSet; i++) {
                     let openSlots = spawnSlots.filter(slot => {
                         if (!(slot in slotTicks)) {
                             return true;
                         }
                         let flyer = slotTicks[slot];
-                        let width = flyer.elem.clientWidth < 10 ? 10 : flyer.elem.clientWidth;
-                        let actualWidth = width * 100 / window.innerWidth;
-                        return flyer.pos + actualWidth < 151;
+                        let actualWidth = flyer.elem.clientWidth * 100 / window.innerWidth;
+                        if (actualWidth < 10) {
+                            actualWidth = 25;
+                        }
+                        return flyer.pos + actualWidth < 126;
                     });
                     if (openSlots.length == 0) {
                         continue;
@@ -190,22 +182,14 @@
                     img.src = `imgs/backs/back${imgId}.jpg`;
                     img.style.top = `${slot}vw`;
                     let flyer = {
-                        pos: delay * 25 + 150,
-                        elem: img,
-                        time: ticks
+                        pos: 125,
+                        elem: img
                     };
-                    if (delay < 0) {
-                        img.style.left = `${delay * 25 + 150}vw`;
-                    }
-                    else {
-                        slotTicks[slot] = flyer;
-                    }
+                    img.style.left = `125vw`;
+                    slotTicks[slot] = flyer;
                     imageFlyers.appendChild(img);
                     flyers.push(flyer);
                 }
-            }
-            for (let i = 0; i < 10; i++) {
-                spawnMore();
             }
             let lastTime = 0;
             let tickAccum = 0;
@@ -236,6 +220,10 @@
                 }
                 lastTime = time;
                 doOneHit(delta);
+                let maxExtra = 50;
+                while (flyers.filter(flyer => flyer.pos <= 0).length < 3 && maxExtra-- > 0) {
+                    doOneHit(100);
+                }
                 requestAnimationFrame(animate);
             }
             requestAnimationFrame(animate);
