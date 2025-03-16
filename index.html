@@ -11,8 +11,24 @@
                 background-color: #111111;
                 color: #ffffff;
                 font-family: Arial, sans-serif;
-                background-image: url("imgs/swarmui-bg.jpg");
-                background-size: 100%;
+            }
+            .image-flyers {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: -50;
+                opacity: 0.3;
+                filter: blur(3px);
+            }
+            .image-flyers img {
+                width: 25vw;
+                height: 25vw;
+                object-fit: contain;
+                position: absolute;
+                top: 0;
+                left: 150vw;
             }
             .content-container {
                 width: calc(min(80vw, 800px));
@@ -92,6 +108,8 @@
         </style>
     </head>
     <body>
+        <div class="background"></div>
+        <div class="image-flyers"></div>
         <div class="content-container">
             <div class="header">SwarmUI</div>
             <div class="tiny-line dark-text">Formerly known as "StableSwarmUI"</div>
@@ -134,5 +152,76 @@
                 <br>This website's code can be found on <a href="https://github.com/mcmonkey4eva/SwarmWebsite">GitHub here</a>.
             </div>
         </div>
+        <script>
+            const imageFlyers = document.querySelector(".image-flyers");
+            const maxImages = 19;
+            let flyers = [];
+            let ticks = 0;
+            let checkRate = 1;
+            let perSet = 10;
+            let spawnSlots = [0, 25, 50, 75, 100, 125, 150, 175, 200];
+            let slotTicks = {0: -10, 25: -10, 50: -10, 75: -10, 100: -10, 125: -10, 150: -10, 175: -10};
+            let delay = -10;
+            function spawnMore() {
+                ticks += 0.5;
+                if (delay < 0) {
+                    delay++;
+                }
+                else if (ticks % checkRate != 0) {
+                    return;
+                }
+                for (let i = 0; i < perSet; i++) {
+                    let openSlots = spawnSlots.filter(slot => slotTicks[slot] <= ticks);
+                    if (openSlots.length == 0) {
+                        continue;
+                    }
+                    let slot = openSlots[Math.floor(Math.random() * openSlots.length)];
+                    if (slot * window.innerWidth / window.innerHeight > 100) {
+                        continue;
+                    }
+                    let imgId = Math.floor(Math.random() * maxImages) + 1;
+                    const img = document.createElement("img");
+                    img.src = `imgs/backs/back${imgId}.jpg`;
+                    img.style.top = `${slot}vw`;
+                    if (delay < 0) {
+                        img.style.left = `${delay * 25 + 150}vw`;
+                    }
+                    else {
+                        slotTicks[slot] = ticks + Math.random() * 2 + 8;
+                    }
+                    imageFlyers.appendChild(img);
+                    flyers.push({
+                        pos: delay * 25 + 150,
+                        elem: img,
+                        time: ticks
+                    });
+                }
+            }
+            for (let i = 0; i < 10; i++) {
+                spawnMore();
+            }
+            let lastTime = 0;
+            let tickAccum = 0;
+            function animate(time) {
+                let delta = time - lastTime;
+                lastTime = time;
+                for (let i = 0; i < flyers.length; i++) {
+                    flyers[i].pos -= delta / 400;
+                    flyers[i].elem.style.left = `${flyers[i].pos}vw`;
+                    if (flyers[i].pos < -50) {
+                        flyers[i].elem.remove();
+                        flyers.splice(i, 1);
+                        i--;
+                    }
+                }
+                tickAccum += delta;
+                if (tickAccum > 500) {
+                    spawnMore();
+                    tickAccum -= 500;
+                }
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        </script>
     </body>
 </html>
